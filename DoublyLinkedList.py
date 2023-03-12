@@ -24,6 +24,7 @@ class DoublyLinkedList:
         else:
             self.tail.next = new_node
             new_node.prev = self.tail
+
         self.tail = new_node
         self.length += 1
         return True
@@ -40,8 +41,9 @@ class DoublyLinkedList:
             self.tail = self.tail.prev
             self.tail.next = None
             temp.prev = None
+
         self.length -= 1
-        return temp.value
+        return temp
     
     def prepend(self, value):
         new_node = Node(value)
@@ -52,6 +54,7 @@ class DoublyLinkedList:
             self.head.prev = new_node
             new_node.next = self.head
             self.head = new_node
+
         self.length += 1
         return True
     
@@ -66,6 +69,7 @@ class DoublyLinkedList:
             self.head = self.head.next
             self.head.prev = None
             temp.next = None
+
         self.length -= 1
         return temp
     
@@ -89,11 +93,39 @@ class DoublyLinkedList:
             return True
         return False
     
-my_dll = DoublyLinkedList(11)
-my_dll.append(3)
-my_dll.append(23)
-my_dll.append(7)
+    def insert(self, index, value):
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        elif index == self.length:
+            return self.append(value)
+        
+        new_node = Node(value)
+        after = self.get(index)
+        before = after.prev
 
-my_dll.set_value(1, 4)
+        new_node.prev = before
+        new_node.next = after
+        before.next = new_node
+        after.prev = new_node
 
-my_dll.print_list()
+        self.length += 1
+        return True
+    
+    def remove(self, index):
+        if index < 0 or index >= self.length:
+            return None
+        if index == 0:
+            return self.pop_first()
+        if index == self.length - 1:
+            return self.pop()
+        
+        temp = self.get(index)
+        temp.prev.next = temp.next
+        temp.next.prev = temp.prev
+        temp.prev = None
+        temp.next = None
+
+        self.length -= 1
+        return temp
