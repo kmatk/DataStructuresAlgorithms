@@ -1,3 +1,5 @@
+import LinkedList as ll
+
 def merge(list1, list2):
     combined = []
     i, j = 0, 0
@@ -24,8 +26,3 @@ def merge_sort(my_list):
     right = merge_sort(my_list[mid_index:])
 
     return merge(left, right)
-
-
-original_list = [4, 3, 6, 2, 10, 15, 36, 2, 9]
-sorted_list = merge_sort(original_list)
-print(sorted_list)
